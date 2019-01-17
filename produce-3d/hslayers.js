@@ -1,7 +1,15 @@
 'use strict';
-
 var hsl_path = '../../hslayers-ng/';
-var gitsha = '1';
+var gitsha;
+$.ajax({
+    type: "GET",
+    url: hsl_path + 'gitsha.js',
+    async: false
+}).done(function(response){
+    gitsha = response
+}).fail(function(){
+    gitsha = Math.random();
+})
 
 require.config({
     urlArgs: 'bust=' + gitsha,
