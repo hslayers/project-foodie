@@ -1,6 +1,6 @@
 define(['ol'],
 
-    function (ol) {
+    function(ol) {
         var olus_source = new ol.source.Vector();
         var $scope;
         var $compile;
@@ -18,7 +18,7 @@ define(['ol'],
             $compile(el)($scope);
         }
 
-        olus_source.cesiumStyler = function (dataSource) {
+        olus_source.cesiumStyler = function(dataSource) {
             var entities = dataSource.entities.values;
             for (var i = 0; i < entities.length; i++) {
                 var entity = entities[i];
@@ -26,15 +26,15 @@ define(['ol'],
                 var name = entity.properties.label;
                 var use = parseInt(entity.properties.use.getValue());
                 entity.polygon.outline = false;
-                entity.polygon.material = new Cesium.Color.fromCssColorString( utils.rainbow(350, use, 0.1));
+                entity.polygon.material = new Cesium.Color.fromCssColorString(utils.rainbow(350, use, 0.1));
                 entity.styled = true;
                 //entity.onclick = entityClicked
             }
         }
 
         var me = {
-            get: function () {
-                if (map.getView().getResolution() > 2.48657133911758 || olus_lyr.getVisible()==false) return;
+            get: function() {
+                if (map.getView().getResolution() > 2.48657133911758 || olus_lyr.getVisible() == false) return;
                 var format = new ol.format.WKT();
                 var bbox = map.getView().calculateExtent(map.getSize());
                 var ext = bbox;
@@ -55,9 +55,9 @@ define(['ol'],
 
                 olus_source.set('loaded', false);
                 $.ajax({
-                    url: q
-                })
-                    .done(function (response) {
+                        url: q
+                    })
+                    .done(function(response) {
                         if (angular.isUndefined(response.results)) return;
                         var features = [];
                         for (var i = 0; i < response.results.bindings.length; i++) {
@@ -67,7 +67,11 @@ define(['ol'],
                                     var g_feature = format.readFeature(b.wkt.value.toUpperCase());
                                     var ext = g_feature.getGeometry().getExtent()
                                     var geom_transformed = g_feature.getGeometry().transform('EPSG:4326', map.getView().getProjection());
-                                    var feature = new ol.Feature({ geometry: geom_transformed, parcel: b.o.value, use: b.use.value });
+                                    var feature = new ol.Feature({
+                                        geometry: geom_transformed,
+                                        parcel: b.o.value,
+                                        use: b.use.value
+                                    });
                                     features.push(feature);
                                 }
                             } catch (ex) {
@@ -80,12 +84,12 @@ define(['ol'],
                         olus_source.dispatchEvent('features:loaded', olus_source);
                     })
             },
-            createOluLayer: function () {
+            createOluLayer: function() {
                 olus_lyr = new ol.layer.Vector({
                     title: "Open land use parcels",
                     source: olus_source,
                     visible: false,
-                    style: function (feature, resolution) {
+                    style: function(feature, resolution) {
                         var use = feature.get('use').split('/');
                         use = use[use.length - 1];
                         return [
@@ -100,7 +104,7 @@ define(['ol'],
                 });
                 return olus_lyr;
             },
-            init: function (_$scope, _$compile, _map, _utils) {
+            init: function(_$scope, _$compile, _map, _utils) {
                 $scope = _$scope;
                 $compile = _$compile;
                 map = _map;

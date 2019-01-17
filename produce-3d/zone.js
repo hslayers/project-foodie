@@ -1,6 +1,6 @@
 define(['ol'],
 
-    function (ol) {
+    function(ol) {
         var zones_source = new ol.source.Vector();
         var $scope;
         var $compile;
@@ -23,7 +23,7 @@ define(['ol'],
             $compile(el)($scope);
         }
 
-        zones_source.cesiumStyler = function (dataSource) {
+        zones_source.cesiumStyler = function(dataSource) {
             var entities = dataSource.entities.values;
             for (var i = 0; i < entities.length; i++) {
                 var entity = entities[i];
@@ -33,9 +33,11 @@ define(['ol'],
                 crop = parseInt(crop[crop.length - 1]);
                 entity.polygon.outline = false;
                 entity.polygon.material = new Cesium.Color.fromCssColorString(utils.rainbow(30, crop, 0.7));
+
                 function fillExtrudedHeight() {
                     return (this.entity.properties.height || 0) + this.entity.properties.numerical_amount / 100
                 }
+
                 function fillHeight() {
                     return this.entity.properties.height || 0
                 }
@@ -55,7 +57,7 @@ define(['ol'],
                 var promise = Cesium.sampleTerrainMostDetailed(viewer.terrainProvider, [
                     cartoPos
                 ]);
-                Cesium.when(promise, function (updatedPositions) {
+                Cesium.when(promise, function(updatedPositions) {
                     updatedPositions[0].entity.properties.height = updatedPositions[0].height;
                     updatedPositions[0].entity.polygon.height.setCallback(fillHeight, true);
                     updatedPositions[0].entity.polygon.extrudedHeight.setCallback(fillExtrudedHeight, true);
@@ -76,7 +78,7 @@ define(['ol'],
         }
 
         var me = {
-            get: function () {
+            get: function() {
                 //if(map.getView().getResolution() > 2.48657133911758) return;
                 var format = new ol.format.WKT();
                 var bbox = map.getView().calculateExtent(map.getSize());
@@ -117,9 +119,9 @@ define(['ol'],
 
                 zones_source.set('loaded', false);
                 $.ajax({
-                    url: q
-                })
-                    .done(function (response) {
+                        url: q
+                    })
+                    .done(function(response) {
                         if (angular.isUndefined(response.results)) return;
                         var features = [];
                         for (var i = 0; i < response.results.bindings.length; i++) {
@@ -157,12 +159,12 @@ define(['ol'],
                         zones_source.dispatchEvent('features:loaded', zones_source);
                     })
             },
-            createLayer: function (gettext) {
+            createLayer: function(gettext) {
                 return new ol.layer.Vector({
                     title: gettext("Management zones colored by crop type"),
                     source: zones_source,
                     visible: true,
-                    style: function (feature, resolution) {
+                    style: function(feature, resolution) {
                         var crop = feature.get('crop').split('/');
                         crop = crop[crop.length - 1];
                         var fill = new ol.style.Fill({
@@ -185,8 +187,7 @@ define(['ol'],
                                         color: '#fff',
                                         width: 3
                                     })
-                                })
-                                ,
+                                }),
                                 fill: fill,
                                 stroke: stroke
                             })
@@ -194,7 +195,7 @@ define(['ol'],
                     },
                 })
             },
-            init: function (_$scope, _$compile, _map, _utils, _viewer) {
+            init: function(_$scope, _$compile, _map, _utils, _viewer) {
                 $scope = _$scope;
                 $compile = _$compile;
                 map = _map;
