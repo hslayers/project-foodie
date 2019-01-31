@@ -5,9 +5,9 @@ $.ajax({
     type: "GET",
     url: hsl_path + 'gitsha.js',
     async: false
-}).done(function (response) {
+}).done(function(response) {
     gitsha = response
-}).fail(function () {
+}).fail(function() {
     gitsha = Math.random();
 })
 
@@ -38,16 +38,15 @@ if (typeof require != 'undefined') {
 
     window.name = "NG_DEFER_BOOTSTRAP!";
 
-    require(['core'], function (app) {
-        require(['app'], function (app) {
+    require(['core'], function(app) {
+        require(['app'], function(app) {
             var $html = angular.element(document.getElementsByTagName('html')[0]);
-            angular.element().ready(function () {
+            angular.element().ready(function() {
                 angular.resumeBootstrap([app['name']]);
             });
         });
     });
 } else {
     var $html = angular.element(document.getElementsByTagName('html')[0]);
-    angular.element().ready(function () { });
+    angular.element().ready(function() {});
 }
-
