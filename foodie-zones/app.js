@@ -1,6 +1,6 @@
 'use strict';
 
-define(['angular', 'ol', 'sidebar', 'toolbar', 'layermanager', 'hs.source.SparqlJson', 'map', 'query', 'search', 'print', 'permalink', 'measure', 'legend', 'geolocation', 'core', 'api', 'angular-gettext', 'bootstrap', 'translations', 'compositions', 'status_creator', 'ows'],
+define(['angular', 'ol', 'sidebar', 'toolbar', 'layermanager', 'hs.source.SparqlJson', 'map', 'query', 'search', 'print', 'permalink', 'measure', 'legend', 'geolocation', 'core', 'api', 'angular-gettext', 'bootstrap.bundle', 'translations', 'compositions', 'status_creator', 'ows'],
 
     function(angular, ol, sidebar, toolbar, layermanager, SparqlJson) {
         var module = angular.module('hs', [
@@ -52,7 +52,7 @@ define(['angular', 'ol', 'sidebar', 'toolbar', 'layermanager', 'hs.source.Sparql
                         scope.object = {attributes: []};
                         var q = 'https://www.foodie-cloud.org/sparql?default-graph-uri=&query=' + encodeURIComponent('describe <'+attrs.url+'>') + '&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
                         $.ajax({
-                            url: utils.proxify(q)
+                            url: q
                         })
                         .done(function(response) {
                             if(angular.isUndefined(response.results)) return;
@@ -207,7 +207,7 @@ define(['angular', 'ol', 'sidebar', 'toolbar', 'layermanager', 'hs.source.Sparql
                     
                     olus_source.set('loaded', false);
                     $.ajax({
-                        url: utils.proxify(q)
+                        url: q
                     })
                     .done(function(response) {
                             if(angular.isUndefined(response.results)) return;
@@ -253,7 +253,7 @@ define(['angular', 'ol', 'sidebar', 'toolbar', 'layermanager', 'hs.source.Sparql
                     
                     spoi_source.set('loaded', false);
                     $.ajax({
-                        url: utils.proxify(q)
+                        url: q
                     })
                     .done(function(response) {
                             if(angular.isUndefined(response.results)) return;
@@ -397,7 +397,7 @@ define(['angular', 'ol', 'sidebar', 'toolbar', 'layermanager', 'hs.source.Sparql
                     
                     zones_source.set('loaded', false);
                     $.ajax({
-                        url: utils.proxify(q)
+                        url: q
                     })
                     .done(function(response) {
                             if(angular.isUndefined(response.results)) return;
@@ -468,7 +468,7 @@ define(['angular', 'ol', 'sidebar', 'toolbar', 'layermanager', 'hs.source.Sparql
                 function describeOlu(id, callback){
                     var q = 'https://www.foodie-cloud.org/sparql?default-graph-uri=&query=' + encodeURIComponent('describe <'+id+'>') + '&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
                         $.ajax({
-                            url: utils.proxify(q)
+                            url: q
                         })
                         .done(function(response) {
                             if(angular.isUndefined(response.results)) return;
@@ -486,7 +486,7 @@ define(['angular', 'ol', 'sidebar', 'toolbar', 'layermanager', 'hs.source.Sparql
                 function getLinksTo(id, callback){
                      var q = 'https://www.foodie-cloud.org/sparql?default-graph-uri=&query=' + encodeURIComponent('PREFIX geo: <http://www.opengis.net/ont/geosparql#> PREFIX geof: <http://www.opengis.net/def/function/geosparql/> PREFIX virtrdf: <http://www.openlinksw.com/schemas/virtrdf#> PREFIX poi: <http://www.openvoc.eu/poi#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT * WHERE {?obj <http://www.opengis.net/ont/geosparql#hasGeometry> ?obj_geom. ?obj_geom geo:asWKT ?Coordinates . FILTER(bif:st_intersects (?Coordinates, ?wkt)). { SELECT ?wkt WHERE { <'+id+'> geo:hasGeometry ?geometry. ?geometry geo:asWKT ?wkt.} } }') + '&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
                         $.ajax({
-                            url: utils.proxify(q)
+                            url: q
                         })
                         .done(function(response) {
                                 for (var i = 0; i < response.results.bindings.length; i++) {    
@@ -503,7 +503,7 @@ define(['angular', 'ol', 'sidebar', 'toolbar', 'layermanager', 'hs.source.Sparql
                     if(poi.expanded) {
                         var q = 'https://www.foodie-cloud.org/sparql?default-graph-uri=&query=' + encodeURIComponent('describe <'+poi.url+'>') + '&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
                         $.ajax({
-                            url: utils.proxify(q)
+                            url: q
                         })
                         .done(function(response) {
                             if(angular.isUndefined(response.results)) return;
