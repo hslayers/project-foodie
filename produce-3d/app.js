@@ -125,6 +125,7 @@ define(['angular', 'ol', 'moment', 'olu', 'zone', 'poi', 'sidebar', 'toolbar', '
                 }
 
                 $rootScope.$on('map.sync_center', function(e, center, bounds) {
+                    extentChanged();
                     pois.getPois(map, utils, bounds);
                 })
 
