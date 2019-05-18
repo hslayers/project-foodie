@@ -28,6 +28,7 @@ define(['angular', 'ol', 'sidebar', 'toolbar', 'layermanager', 'hs.source.Sparql
             return {
                 templateUrl: './info.html?bust=' + gitsha,
                 link: function(scope, element, attrs) {
+                    debugger;
                     $('#zone-info-dialog').modal('show');
                 }
             };
@@ -178,6 +179,7 @@ define(['angular', 'ol', 'sidebar', 'toolbar', 'layermanager', 'hs.source.Sparql
                     map = hsMap.map;
                     getZones();
                     map.on('moveend', extentChanged);
+                    initInfoDirective();
                 });
                 
                 function extentChanged(){
@@ -435,9 +437,7 @@ define(['angular', 'ol', 'sidebar', 'toolbar', 'layermanager', 'hs.source.Sparql
                     var el = angular.element('<div hs.foodiezones.info-directive></div>');
                     $("#hs-dialog-area").append(el)
                     $compile(el)($scope);
-                } 
-                
-                initInfoDirective();
+                }                
                     
                 var popup;
                 
