@@ -2,19 +2,19 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
+                <h4>
+                    <translate>{{zone.obj_type}}</translate>
+                </h4>
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span>
                     <span class="sr-only" translate="">Close</span>
                 </button>
-                <h4>
-                    <translate>{{zone.obj_type}}</translate>
-                </h4>
             </div>
             <div class="modal-body">
-                <img src="../../img/ajax-loader.gif" ng-if="zone.attributes.length==0" />
+                <img src="ajax-loader.gif" ng-if="zone.attributes.length==0" />
                 <div class="row">
                     <div class="col-sm-4 col-md-3">
-                        <img ng-src="{{zone.image}}" class="img-thumbnail" alt="Image of produced crop" />
+                        <img ng-src="{{zone.image}}" ng-show="zone.image" class="img-thumbnail" alt="Image of produced crop" />
                     </div>
                     <div class="col-sm-8 col-md-9">
                         <div class="row" ng-repeat="attribute in zone.special_attributes">
