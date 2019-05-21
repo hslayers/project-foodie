@@ -484,7 +484,22 @@ define(['angular', 'ol', 'sidebar', 'toolbar', 'layermanager', 'hs.source.Sparql
                 }
                 
                 function getLinksTo(id, callback){
-                     var q = 'https://www.foodie-cloud.org/sparql?default-graph-uri=&query=' + encodeURIComponent('PREFIX geo: <http://www.opengis.net/ont/geosparql#> PREFIX geof: <http://www.opengis.net/def/function/geosparql/> PREFIX virtrdf: <http://www.openlinksw.com/schemas/virtrdf#> PREFIX poi: <http://www.openvoc.eu/poi#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT * WHERE {?obj <http://www.opengis.net/ont/geosparql#hasGeometry> ?obj_geom. ?obj_geom geo:asWKT ?Coordinates . FILTER(bif:st_intersects (?Coordinates, ?wkt)). { SELECT ?wkt WHERE { <'+id+'> geo:hasGeometry ?geometry. ?geometry geo:asWKT ?wkt.} } }') + '&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
+                     var q = 'https://www.foodie-cloud.org/sparql?default-graph-uri=&query=' + encodeURIComponent(`PREFIX geo: <http://www.opengis.net/ont/geosparql#> 
+                     PREFIX geof: <http://www.opengis.net/def/function/geosparql/> 
+                     PREFIX virtrdf: <http://www.openlinksw.com/schemas/virtrdf#> 
+                     PREFIX poi: <http://www.openvoc.eu/poi#> 
+                     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+                     
+                     SELECT * 
+                     FROM <http://w3id.org/foodie/olu#> 
+                     WHERE { 
+                        ?obj <http://www.opengis.net/ont/geosparql#hasGeometry> ?obj_geom. 
+                        ?obj_geom geo:asWKT ?Coordinates . 
+                        FILTER(bif:st_intersects (?Coordinates, ?wkt)). 
+                        { SELECT ?wkt FROM <http://w3id.org/foodie/core/es#> WHERE { 
+                              <${id}> geo:hasGeometry ?geometry. 
+                               ?geometry geo:asWKT ?wkt.
+                     } } }`) + '&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
                         $.ajax({
                             url: q
                         })
