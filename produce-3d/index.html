@@ -3,27 +3,26 @@
 <head>
   <meta charset="utf-8">
   <title>Produce-3D</title>
-  <meta name="description" content="Pilot for Foodie project demonstrating production zones in vineyards">
+  <meta name="description" content="The application was developed by the DataBio project team, for the purposes of the  INSPIRE HACK 2019.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+  
   <style>
-    .ol-popup-content {
-        max-height: 800px !important;
+   .ol-popup-content {
+        max-height: 1000px !important;
     }
     .table {background-color: #eaeaea;}
     .table .table {
         background-color: rgba(120, 120, 120, 0.2) !important;
     }
-  </style>
-  <link rel="stylesheet" href="../node_modules/cesium/Build/Cesium/Widgets/widgets.css" />
+    </style>
 </head>
 <body >
-    <div hs ng-app="hs" ng-controller="Main" style="position: relative;"></div>
-    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <div hs ng-app="hs" ng-controller="Main" style="position: relative; height:100%"></div>
     <script src="../node_modules/cesium/Build/Cesium/Cesium.js"></script>
-    <script>var hsl_path = '../hslayers-ng/'; var gitsha = '1';</script> 
-    <script src="bundle.min.js"></script>    
-    <script src="hslayers.js"></script> 
+    
+    <script type="application/javascript" src="static/app.bundle.js"></script>
+    
 </body>
 </html>
