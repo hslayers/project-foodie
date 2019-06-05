@@ -6,8 +6,9 @@ var $compile;
 
 function entityClicked(entity) {
     $scope.showInfo(entity);
-    if ($('#zone-info-dialog').length > 0) {
-        angular.element('#zone-info-dialog').parent().remove();
+    if (document.querySelector('#zone-info-dialog')) {
+        var parent = document.querySelector('#zone-info-dialog').parentElement;
+        parent.parentElement.removeChild(parent);
     }
     var el = angular.element('<div hs.foodiezones.info-directive></div>');
     $("#hs-dialog-area").append(el);
